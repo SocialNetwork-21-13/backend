@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
+
 app = FastAPI(title="Ryglogram")
 
 if __name__ == "__main__":

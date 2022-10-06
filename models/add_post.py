@@ -2,13 +2,13 @@ import datetime
 from pydantic import BaseModel
 
 
-class BaseJob(BaseModel):
+class BasePost(BaseModel):
 
     description: str
-    author: str
+    tags: list
 #   Подумать нужно ли в посте image или оно в тексте будет каким-то образом
 
-class Job(BaseJob):
+class Post(BasePost):
     id: int
     user_id: int
     slag: str
@@ -16,5 +16,5 @@ class Job(BaseJob):
     updated_at: datetime.datetime
 
 
-class JobIn(BaseJob):
+class PostIn(BasePost):
     pass

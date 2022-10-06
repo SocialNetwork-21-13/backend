@@ -1,20 +1,19 @@
 import datetime
+from bson import ObjectId
 from pydantic import BaseModel
 
 
 class BasePost(BaseModel):
-
     description: str
     tags: list
-#   Подумать нужно ли в посте image или оно в тексте будет каким-то образом
+    image : bytes
 
 class Post(BasePost):
-    id: int
-    user_id: int
+    id: ObjectId
+    user_id: ObjectId
     slag: str
     created_at: datetime.datetime
     updated_at: datetime.datetime
-
 
 class PostIn(BasePost):
     pass

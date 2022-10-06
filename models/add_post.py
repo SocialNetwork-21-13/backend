@@ -16,5 +16,5 @@ class Post(BasePost):
     updated_at: datetime.datetime
 
 
-class JobIn(BasePost):
+class PostIn(BasePost):
     pass

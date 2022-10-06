@@ -1,14 +1,15 @@
 from datetime import date, datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr, validator, constr
-from pyparsing import Char
+
 
 class User(BaseModel):
     id: Optional[str] = None
     name: str
     email: EmailStr
     hashed_password: str
-    gender : Char
+    username : str
+    gender : str
     age : date
     created_at: datetime.datetime
     updated_at: datetime.datetime
@@ -18,7 +19,8 @@ class UserIn(BaseModel):
     email: EmailStr
     password: constr(min_length=8)
     password2: str
-    gender : Char
+    username : str
+    gender : str
     age : date
 
     @validator("password2")

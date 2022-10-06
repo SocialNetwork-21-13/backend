@@ -5,7 +5,7 @@ from pydantic import BaseModel
 class BasePost(BaseModel):
 
     description: str
-    author: str
+    tags: list
 #   Подумать нужно ли в посте image или оно в тексте будет каким-то образом
 
 class Post(BasePost):

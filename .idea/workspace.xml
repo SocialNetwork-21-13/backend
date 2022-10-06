@@ -68,6 +68,7 @@
       <updated>1664972450168</updated>
       <workItem from="1664972453075" duration="1359000" />
       <workItem from="1665003844428" duration="2720000" />
+      <workItem from="1665061095668" duration="485000" />
     </task>
     <task id="LOCAL-00001" summary="to .ignore">
       <created>1665004373952</created>
@@ -104,7 +105,21 @@
       <option name="project" value="LOCAL" />
       <updated>1665013551246</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Сделал пост, но нужно чекнуть вместе подумать над image">
+      <created>1665061141171</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1665061141171</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Сделал пост, но нужно чекнуть вместе подумать над image">
+      <created>1665061193408</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665061193408</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

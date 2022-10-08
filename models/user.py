@@ -1,18 +1,18 @@
 from datetime import date, datetime
-from typing import Optional
-from pydantic import BaseModel, EmailStr, validator, constr
+from pydantic import BaseModel, EmailStr, validator, constr, Field
+import uuid
 
 
 class User(BaseModel):
-    id: Optional[str] = None
+    id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str
     email: EmailStr
     hashed_password: str
     username : str
     gender : str
     age : date
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
+    created_at: datetime
+    updated_at: datetime
 
 class UserIn(BaseModel):
     name: str

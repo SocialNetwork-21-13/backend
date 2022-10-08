@@ -2,13 +2,17 @@
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
 const database = 'fastapi_db';
-const collection = 'users';
+const collection1 = 'users';
+const collection2 = 'posts'
+const collection3 = 'comments'
 
 // Create a new database.
 use(database);
 
 // Create a new collection.
-db.createCollection(collection);
+db.createCollection(collection1);
+db.createCollection(collection2);
+db.createCollection(collection3);
 
 // The prototype form to create a regular collection:
 /* db.createCollection( <name>,

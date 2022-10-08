@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import datetime
 from pydantic import BaseModel, EmailStr, validator, constr, Field
 import uuid
 
@@ -11,8 +12,8 @@ class User(BaseModel):
     username : str
     gender : str
     age : date
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
 
 class UserIn(BaseModel):
     name: str

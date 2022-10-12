@@ -7,6 +7,7 @@ from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 
+
 class User(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     profile_image: str = str(config["DEFAULT_IMAGE_ID"])

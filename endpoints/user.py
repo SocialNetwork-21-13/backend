@@ -42,19 +42,3 @@ def delete_user(user_id : str):
 @router.get("/{user_id}/get_image", response_description="Get profile image", response_class=Response)
 def get_profile_image(user_id : str):
     return Response(users.get_file(user_id))
-
-
-'''
-@router.post("/upload", response_description="test", response_model=str)
-def test_upload(request : Request, file : bytes = File()):
-    test = gridfs.GridFS(request.app.database)
-    obj = test.put(file)
-    return str(test.get(obj)._id)
-
-@router.get("/upload", response_description="test")
-def test_get(request : Request, file_id : str):
-    test = gridfs.GridFS(request.app.database, "imgs_profile")
-    if test.exists(ObjectId(file_id)):
-        test.delete(ObjectId(file_id))
-    raise "Err"
-'''

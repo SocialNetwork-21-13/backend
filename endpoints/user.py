@@ -39,6 +39,6 @@ def update_user_username(user_id : str, username : str):
 def delete_user(user_id : str):
     users.delete(user_id)
 
-@router.get("/{user_id}/get_image", response_description="Get profile image", response_class=Response)
+@router.get("/{user_id}/get_image", response_description="Get profile image", response_model=Response)
 def get_profile_image(user_id : str):
     return Response(users.get_file(user_id))

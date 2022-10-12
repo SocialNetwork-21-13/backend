@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from dotenv import dotenv_values
 from pymongo import MongoClient
+from endpoints.user import router as user_router
 
 config = dotenv_values(".env")
 
@@ -19,3 +20,5 @@ def shutdown_db_client():
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
+
+app.include_router(user_router, prefix="/users")

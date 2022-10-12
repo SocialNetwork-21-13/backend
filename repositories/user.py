@@ -73,3 +73,13 @@ class UserRepository(BaseRepository):
         return self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { "username" : new_username} },
                             )
+
+    def delete(self, user_id : str):
+        self.database["users"].find_one_and_delete({"_id" : user_id})
+
+    def get_file(self, user_id : str) -> bytes:
+        user = self.database["users"].find_one({"_id" : user_id})
+        imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
+        file = imgs_profile.get(ObjectId(user["profile_image"]))
+        return file.read()
+        

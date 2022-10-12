@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, status, File
+from fastapi import APIRouter, Body, status, File, Response
 from typing import List
 from repositories.user import UserRepository
 from models.user import User, UserIn
@@ -34,6 +34,14 @@ def update_name_and_surname(user_id : str, name : str, surname : str):
 @router.put("/{user_id}/username", response_description="Update username", response_model=User)
 def update_user_username(user_id : str, username : str):
     return users.update_username(user_id, username)
+
+@router.delete("/{user_id}", response_description="Delete account")
+def delete_user(user_id : str):
+    users.delete(user_id)
+
+@router.get("/{user_id}/get_image", response_description="Get profile image", response_class=Response)
+def get_profile_image(user_id : str):
+    return Response(users.get_file(user_id))
 
 
 '''

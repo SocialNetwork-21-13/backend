@@ -3,7 +3,6 @@ from pymongo import MongoClient
 
 config = dotenv_values(".env")
 
-
 class BaseRepository:
     def __init__(self):
         client = MongoClient(config["ATLAS_URI"])

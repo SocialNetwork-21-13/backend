@@ -42,3 +42,19 @@ def delete_user(user_id : str):
 @router.get("/{user_id}/get_image", response_description="Get profile image")
 def get_profile_image(user_id : str):
     return Response(users.get_file(user_id))
+
+@router.put("/{user_id}/subscribe", response_description="Subscibe on user")
+def subscribe_user(user_id : str, sub_id : str):
+    return users.subscribe(user_id, sub_id)
+
+@router.put("/{user_id}/unsubscribe", response_description="Unsubscribe user")
+def unsubscribe_user(user_id : str, sub_id : str):
+    return users.unsubsribe(user_id, sub_id)
+
+@router.get("/{user_id}/get_subscribers", response_description="List subscribers", response_model=List[User])
+def get_subscribers(user_id : str):
+    return users.get_subscribers(user_id)
+
+@router.get("/{user_id}/get_subscriptions", response_description="List subscriptions", response_model=List[User])
+def get_subscriptions(user_id : str):
+    return users.get_subscriptions(user_id)

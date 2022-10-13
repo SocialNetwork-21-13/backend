@@ -14,6 +14,8 @@ class User(BaseModel):
     username: str
     gender: str
     age: date
+    subscriptions : list = []
+    subscribers : list = []
     created_at: datetime.datetime
     updated_at: datetime.datetime
 

@@ -12,7 +12,7 @@ from .base import BaseRepository
 
 class UserRepository(BaseRepository):
 
-    default_image_id : str # default profile image
+    default_image_id : str = "" # default profile image
 
     def get_all(self, limit: int = 100, skip: int = 0) -> List[User]:
         query = self.database["users"].find(limit=limit)
@@ -95,3 +95,34 @@ class UserRepository(BaseRepository):
                             { '$set': { "bio" : new_bio} },
                             )
         
+    def subscribe(self, user_id : str, sub_user_id : str):
+        self.database["users"].find_one_and_update({'_id': user_id},
+                            { '$push': { "subscriptions" : sub_user_id} },
+                            )   
+        self.database["users"].find_one_and_update({'_id': sub_user_id},
+                            { '$push': { "subscribers" : user_id} },
+                            )   
+    
+    def unsubsribe(self, user_id : str, sub_user_id : str):
+        self.database["users"].find_one_and_update({'_id': user_id},
+                            { '$pull': { "subscriptions" : sub_user_id} },
+                            )
+        self.database["users"].find_one_and_update({'_id': sub_user_id},
+                            { '$pull': { "subscribers" : user_id} },
+                            )
+    
+    def get_subscribers(self, user_id : str) -> List[User]:
+        user = self.database["users"].find_one({"_id" : user_id})
+        res = []
+        for u_id in user["subscribers"]:
+            u = self.database["users"].find_one({"_id" : u_id})
+            res.append(u)
+        return res
+        
+    def get_subscriptions(self, user_id : str) -> List[User]:
+        user = self.database["users"].find_one({"_id" : user_id})
+        res = []
+        for u_id in user["subscriptions"]:
+            u = self.database["users"].find_one({"_id" : u_id})
+            res.append(u)
+        return res

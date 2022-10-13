@@ -46,3 +46,19 @@ def get_profile_image(user_id : str):
 @router.put("/{user_id}/bio", response_description="Update bio", response_model=User)
 def update_bio(user_id : str, bio : str):
     return users.update_bio(user_id, bio)
+
+@router.put("/{user_id}/subscribe", response_description="Subscibe on user")
+def subscribe_user(user_id : str, sub_id : str):
+    return users.subscribe(user_id, sub_id)
+
+@router.put("/{user_id}/unsubscribe", response_description="Unsubscribe user")
+def unsubscribe_user(user_id : str, sub_id : str):
+    return users.unsubsribe(user_id, sub_id)
+
+@router.get("/{user_id}/get_subscribers", response_description="List subscribers", response_model=List[User])
+def get_subscribers(user_id : str):
+    return users.get_subscribers(user_id)
+
+@router.get("/{user_id}/get_subscriptions", response_description="List subscriptions", response_model=List[User])
+def get_subscriptions(user_id : str):
+    return users.get_subscriptions(user_id)

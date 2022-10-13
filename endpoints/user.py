@@ -42,3 +42,7 @@ def delete_user(user_id : str):
 @router.get("/{user_id}/get_image", response_description="Get profile image")
 def get_profile_image(user_id : str):
     return Response(users.get_file(user_id))
+
+@router.put("/{user_id}/bio", response_description="Update bio", response_model=User)
+def update_bio(user_id : str, bio : str):
+    return users.update_bio(user_id, bio)

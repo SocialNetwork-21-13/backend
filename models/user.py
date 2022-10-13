@@ -9,6 +9,7 @@ class User(BaseModel):
     profile_image: str = ""
     name: str
     surname : str
+    bio : str
     email: EmailStr
     hashed_password: str
     username: str
@@ -20,6 +21,7 @@ class User(BaseModel):
 class UserIn(BaseModel):
     name: str
     surname : str
+    bio : str
     email: EmailStr
     password: constr(min_length=8)
     password2: str

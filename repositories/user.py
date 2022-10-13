@@ -27,6 +27,7 @@ class UserRepository(BaseRepository):
         user = User (
             name=u.name,
             surname=u.surname,
+            bio=u.bio,
             email=u.email,
             hashed_password=hash_password(u.password),
             username=u.username,
@@ -88,4 +89,9 @@ class UserRepository(BaseRepository):
         imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
         file = imgs_profile.get(ObjectId(user["profile_image"]))
         return file.read()
+
+    def update_bio(self, user_id : str, new_bio : str) -> User:
+        return self.database["users"].find_one_and_update({'_id': user_id},
+                            { '$set': { "bio" : new_bio} },
+                            )
         

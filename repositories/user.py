@@ -126,3 +126,4 @@ class UserRepository(BaseRepository):
             u = self.database["users"].find_one({"_id" : u_id})
             res.append(u)
         return res
+        

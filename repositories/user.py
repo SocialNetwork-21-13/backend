@@ -47,6 +47,10 @@ class UserRepository(BaseRepository):
             return user
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with email: {email} not found")
 
+    def upload_image(self, file : bytes):
+        imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
+        imgs_profile.put(file)
+
     def get_file_id(self, file : bytes) -> str:
         imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
         obj = imgs_profile.put(file)

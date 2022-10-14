@@ -111,19 +111,17 @@ class UserRepository(BaseRepository):
                             { '$pull': { "subscribers" : user_id} },
                             )
     
-    def get_subscribers(self, user_id : str) -> List[User]:
+    def get_sub_helper(self, user_id : str, what_need : str) -> List[User]:
         user = self.database["users"].find_one({"_id" : user_id})
         res = []
-        for u_id in user["subscribers"]:
+        for u_id in user[what_need]:
             u = self.database["users"].find_one({"_id" : u_id})
             res.append(u)
         return res
+
+    def get_subscribers(self, user_id : str) -> List[User]:
+        return self.get_sub_helper(user_id, "subscribers")
         
     def get_subscriptions(self, user_id : str) -> List[User]:
-        user = self.database["users"].find_one({"_id" : user_id})
-        res = []
-        for u_id in user["subscriptions"]:
-            u = self.database["users"].find_one({"_id" : u_id})
-            res.append(u)
-        return res
+        return self.get_sub_helper(user_id, "subscriptions")
         

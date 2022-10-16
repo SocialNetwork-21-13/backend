@@ -25,7 +25,7 @@ def upload_file(user_id : str, file: bytes = File()):
 
 @router.post("/upload_default", response_description="Upload default image", status_code=status.HTTP_201_CREATED)
 def upload_default_img(file : bytes = File()):
-    _ = users.get_file_id(file)
+   users.upload_image(file)
 
 @router.put("/{user_id}/name_surname", response_description="Update name and surname", response_model=User)
 def update_name_and_surname(user_id : str, name : str, surname : str):

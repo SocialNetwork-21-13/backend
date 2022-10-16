@@ -8,12 +8,12 @@ from core.security import hash_password
 from fastapi import HTTPException, status
 from fastapi.encoders import jsonable_encoder
 import gridfs
-from dotenv import dotenv_values
 from .base import BaseRepository
 
-config = dotenv_values(".env")
-
 class UserRepository(BaseRepository):
+
+    default_image_id : str # default profile image
+
     def get_all(self, limit: int = 100, skip: int = 0) -> List[User]:
         query = self.database["users"].find(limit=limit)
         return list(query)
@@ -35,6 +35,7 @@ class UserRepository(BaseRepository):
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow(),
         )
+        user.profile_image = self.default_image_id
         user = jsonable_encoder(user)
         new_user = self.database["users"].insert_one(user)
         created_user = self.database["users"].find_one(
@@ -46,6 +47,11 @@ class UserRepository(BaseRepository):
         if (user := self.database["users"].find_one({"email": email})) is not None:
             return user
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with email: {email} not found")
+
+    def upload_image(self, file : bytes):
+        imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
+        obj = imgs_profile.put(file)
+        self.default_image_id = str(imgs_profile.get(obj)._id)
 
     def get_file_id(self, file : bytes) -> str:
         imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
@@ -62,7 +68,7 @@ class UserRepository(BaseRepository):
 
     def update_profile_image(self, user_id : str, file_id : str) -> User:
         user = self.database["users"].find_one({"_id" : user_id})
-        if user["profile_image"] != str(config["DEFAULT_IMAGE_ID"]):
+        if user["profile_image"] != self.default_image_id:
             imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
             imgs_profile.delete(ObjectId(user["profile_image"]))
         return self.database["users"].find_one_and_update({'_id': user_id},

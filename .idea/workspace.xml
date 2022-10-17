@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5f81ba3-efd6-4a61-afdf-07fadcc89cfc" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/endpoints/post.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repositories/post.py" afterDir="false" />
+    <list default="true" id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/endpoints/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/endpoints/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/post.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/post.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repositories/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/post.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Merge.Settings">
     <option name="BRANCH" value="almostinf_back" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="Ryginkin" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -140,17 +124,17 @@
       <method v="2" />
     </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\Ivan\.virtualenvs\backend-cKBmInCj\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
@@ -161,6 +145,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.__init__" />
+      <item itemvalue="Python.__init__ (1)" />
+      <item itemvalue="Python.__init__ (2)" />
+      <item itemvalue="Python.__init__ (3)" />
+      <item itemvalue="Python.main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
@@ -174,7 +165,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e5f81ba3-efd6-4a61-afdf-07fadcc89cfc" name="Changes" comment="Update" />
+      <changelist id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="" />
       <created>1664972450168</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -182,10 +173,8 @@
       <workItem from="1664972453075" duration="1359000" />
       <workItem from="1665003844428" duration="2720000" />
       <workItem from="1665588255133" duration="1916000" />
-      <workItem from="1665671281736" duration="16936000" />
-      <workItem from="1665759274542" duration="25000" />
-      <workItem from="1665921446902" duration="391000" />
-      <workItem from="1665921852097" duration="2550000" />
+      <workItem from="1666003027864" duration="1515000" />
+      <workItem from="1666007913008" duration="1229000" />
     </task>
     <task id="LOCAL-00001" summary="to .ignore">
       <created>1665004373952</created>
@@ -222,14 +211,7 @@
       <option name="project" value="LOCAL" />
       <updated>1665588272412</updated>
     </task>
-    <task id="LOCAL-00006" summary="Update">
-      <created>1665672323213</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1665672323213</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +250,6 @@
     <SUITE FILE_PATH="coverage/backend$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1665589141941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/db" />
     <SUITE FILE_PATH="coverage/backend$__init____2_.coverage" NAME="__init__ (2) Coverage Results" MODIFIED="1665589146710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/models" />
     <SUITE FILE_PATH="coverage/backend$__init____3_.coverage" NAME="__init__ (3) Coverage Results" MODIFIED="1665589165576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/repositories" />
-    <SUITE FILE_PATH="coverage/backend$main.coverage" NAME="main Coverage Results" MODIFIED="1665921928350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/backend$main.coverage" NAME="main Coverage Results" MODIFIED="1665941771759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

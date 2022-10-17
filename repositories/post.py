@@ -10,12 +10,13 @@ from bson import ObjectId
 class PostRepository(BaseRepository):
 
 
-    def create(self,user_id:str, p: PostIn) ->Post:
+    def create(self,user_id:str,file_id:str, p: PostIn) ->Post:
         post = Post(
             description=p.description,
             tags=p.tags,
-            image=p.image,
+            image=file_id,
             user_id=user_id,
+            likes=0,
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow(),
         )

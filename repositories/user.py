@@ -18,8 +18,6 @@ import os
 security = HTTPBearer()
 auth_handler = Auth()
 
-DEFAULT_IMAGE_ID = ""
-
 class UserRepository(BaseRepository):
 
     # User's profile methods

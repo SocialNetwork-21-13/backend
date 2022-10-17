@@ -19,6 +19,7 @@ class User(BaseModel):
     username: str
     gender: str = ""
     age: Optional[date]
+    liked_posts : list = []
     subscriptions : list = []
     subscribers : list = []
     created_at: datetime.datetime

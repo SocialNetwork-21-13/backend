@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Body, status,Response, File, UploadFile, Form, Depends
+from fastapi import APIRouter, Body, status,Response, File, UploadFile, Form, Depends, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import List
 from repositories.post import PostRepository
 from models.post import Post, PostIn
+from repositories.user import UserRepository
 
 router = APIRouter()
 
 posts = PostRepository()
+users = UserRepository()
+security = HTTPBearer()
 
 @router.post("/{user_id}", response_description="Create a new post", status_code=status.HTTP_201_CREATED,response_model=Post)
 def create(user_id,file: UploadFile=File(),post:PostIn=Depends()):
@@ -28,3 +32,13 @@ def get_post_image(post_id : str):
 @router.delete("/{post_id}",response_description="Delete post")
 def delete_post(post_id:str):
     posts.delete(post_id)
+
+@router.put("/like", response_description="Like post", response_model=Post)
+def like(post_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
+    user = users.get_current_user(credentials.credentials)
+    return posts.set_like(post_id, user["_id"])
+
+@router.put("/dislike", response_description="Dislike post", response_model=Post)
+def dislike(post_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
+    user = users.get_current_user(credentials.credentials)
+    return posts.unset_like(post_id, user["_id"])

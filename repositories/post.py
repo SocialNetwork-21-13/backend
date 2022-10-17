@@ -6,11 +6,13 @@ from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException, status
 import gridfs
 from bson import ObjectId
+from repositories.user import UserRepository
+
+users = UserRepository()
 
 class PostRepository(BaseRepository):
 
-
-    def create(self,user_id:str,file_id:str, p: PostIn) ->Post:
+    def create(self, user_id:str, file_id:str, p: PostIn) ->Post:
         post = Post(
             description=p.description,
             tags=p.tags,
@@ -56,7 +58,23 @@ class PostRepository(BaseRepository):
 
     def set_post_image(self, user_id: str, file_id: str)->Post:
         post = self.database["posts"].find_one({"user_id": user_id})
-        imgs_post = gridfs.GridFS(self.database, "imgs_post")
         return self.database["posts"].find_one_and_update({'user_id': user_id},
                                                           {'$set': {"image": file_id}},
                                                           )
+    
+    def set_like(self, post_id : str, user_id : str) -> Post:
+        self.database["users"].find_one_and_update({'_id': user_id},
+                                                    {'$push': {"liked_posts": post_id}},
+                                                )
+        return self.database["posts"].find_one_and_update({'_id': post_id},
+                                                          {'$inc': {"likes": 1}},
+                                                          )
+
+    def unset_like(self, post_id : str, user_id : str) -> Post:
+        self.database["users"].find_one_and_update({'_id': user_id},
+                                                    {'$pull': {"liked_posts": post_id}},
+                                                )
+        return self.database["posts"].find_one_and_update({'_id': post_id},
+                                                          {'$inc': {"likes": -1}},
+                                                          )
+        

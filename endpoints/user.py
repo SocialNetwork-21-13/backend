@@ -62,3 +62,4 @@ def get_subscribers(user_id : str):
 @router.get("/{user_id}/get_subscriptions", response_description="List subscriptions", response_model=List[User])
 def get_subscriptions(user_id : str):
     return users.get_subscriptions(user_id)
+    

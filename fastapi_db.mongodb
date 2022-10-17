@@ -5,7 +5,6 @@ const database = 'fastapi_db';
 const collection1 = 'users';
 const collection2 = 'posts'
 const collection3 = 'comments'
-
 // Create a new database.
 use(database);
 

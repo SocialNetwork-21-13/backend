@@ -3,7 +3,9 @@ import datetime
 from typing import Optional
 import pydantic
 from pydantic import BaseModel, EmailStr, validator, constr, Field
+from typing import Optional
 import uuid
+import pydantic
 # from bson.objectid import ObjectId
 
 class User(BaseModel):

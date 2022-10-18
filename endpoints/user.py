@@ -25,7 +25,7 @@ def upload_file(user_id : str, file: bytes = File()):
 
 @router.post("/upload_default", response_description="Upload default image", status_code=status.HTTP_201_CREATED)
 def upload_default_img(file : bytes = File()):
-    _ = users.get_file_id(file)
+   users.upload_image(file)
 
 @router.put("/{user_id}/name_surname", response_description="Update name and surname", response_model=User)
 def update_name_and_surname(user_id : str, name : str, surname : str):
@@ -39,6 +39,6 @@ def update_user_username(user_id : str, username : str):
 def delete_user(user_id : str):
     users.delete(user_id)
 
-@router.get("/{user_id}/get_image", response_description="Get profile image", response_model=Response)
+@router.get("/{user_id}/get_image", response_description="Get profile image")
 def get_profile_image(user_id : str):
     return Response(users.get_file(user_id))

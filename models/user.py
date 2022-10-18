@@ -2,15 +2,11 @@ from datetime import date, datetime
 import datetime
 from pydantic import BaseModel, EmailStr, validator, constr, Field
 import uuid
-from dotenv import dotenv_values
 # from bson.objectid import ObjectId
-
-config = dotenv_values(".env")
-
 
 class User(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
-    profile_image: str = str(config["DEFAULT_IMAGE_ID"])
+    profile_image: str = ""
     name: str
     surname : str
     email: EmailStr

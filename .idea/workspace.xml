@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="Update">
-      <change afterPath="$PROJECT_DIR$/core/auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/endpoints/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/endpoints/depends.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/depends.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/endpoints/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/post.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/endpoints/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/post.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repositories/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/user.py" afterDir="false" />
-    </list>
+    <list default="true" id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="adding auth to all post methods" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -183,7 +172,7 @@
       <workItem from="1666007913008" duration="1229000" />
       <workItem from="1666108489973" duration="19000" />
       <workItem from="1666108985087" duration="1342000" />
-      <workItem from="1666112993762" duration="1215000" />
+      <workItem from="1666112993762" duration="1287000" />
     </task>
     <task id="LOCAL-00001" summary="to .ignore">
       <created>1665004373952</created>
@@ -220,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665588272412</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="adding auth to all post methods">
+      <created>1666115536503</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666115536503</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +237,8 @@
     <MESSAGE value="to .ignore" />
     <MESSAGE value="mongodb" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="adding auth to all post methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding auth to all post methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

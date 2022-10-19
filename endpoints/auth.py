@@ -1,4 +1,4 @@
-from fastapi import Body, Depends, FastAPI, APIRouter, HTTPException, Security
+from fastapi import Depends, APIRouter, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from core.auth import Auth
 from models.user import AuthModel, User
@@ -27,12 +27,6 @@ def refresh_token(credentials: HTTPAuthorizationCredentials = Security(security)
     refresh_token = credentials.credentials
     new_token = auth_handler.refresh_token(refresh_token)
     return {'access_token': new_token}
-
-@router.get('/secret')
-def secret_data(credentials: HTTPAuthorizationCredentials = Security(security)):
-    token = credentials.credentials
-    if(auth_handler.decode_token(token)):
-        return 'Top Secret data only authorized users can access this info'
 
 @router.get("/user", response_model=User)
 def get_current_user(credentials: HTTPAuthorizationCredentials = Security(security)):

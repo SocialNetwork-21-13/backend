@@ -39,7 +39,8 @@ class PostRepository(BaseRepository):
             posts,
             key=lambda x: datetime.strptime(x['updated_at'], "%Y-%m-%dT%H:%M:%S.%f"), reverse=True
         )
-        return posts
+        sorted_posts=posts
+        return sorted_posts
 
     def get_feed(self, user_id:str)-> List[Post]:
         feed=[]
@@ -48,8 +49,8 @@ class PostRepository(BaseRepository):
         for sub_user in subs:
             query = self.get_all_by_id(sub_user)
             feed=feed+query
-
-        return self.sort_by_time(feed)
+        sort_feed=self.sort_by_time(feed)
+        return sort_feed
 
     def get_all_by_id(self,user_id:str) -> List[Post]:
         query = self.database["posts"].find({"user_id": user_id})
@@ -57,7 +58,8 @@ class PostRepository(BaseRepository):
 
     def get_by_id(self, id : int) -> Optional[Post]:
         if (post := self.database["posts"].find_one({"_id": id})) is not None:
-            return post
+            found_post=post
+            return found_post
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with ID {id} not found")
 
     def delete(self, id: str,user_id:str):
@@ -74,7 +76,8 @@ class PostRepository(BaseRepository):
     def get_file_id(self, file:bytes) ->str:
         imgs_post = gridfs.GridFS(self.database, "imgs_post")
         obj = imgs_post.put(file)
-        return str(imgs_post.get(obj)._id)
+        file_id=str(imgs_post.get(obj)._id)
+        return file_id
 
     def get_file(self, post_id : str) ->bytes:
         post = self.database["posts"].find_one({"_id" : post_id})
@@ -82,17 +85,11 @@ class PostRepository(BaseRepository):
         file = imgs_post.get(ObjectId(post["image"]))
         return file.read()
 
-    def set_post_image(self, user_id: str, file_id: str)->Post:
-        post = self.database["posts"].find_one({"user_id": user_id})
-        return self.database["posts"].find_one_and_update({'user_id': user_id},
-                                                          {'$set': {"image": file_id}},
-                                                          )
-    
     def set_like(self, post_id : str, user_id : str) -> Post:
         self.database["users"].find_one_and_update({'_id': user_id},
                                                     {'$push': {"liked_posts": post_id}},
                                                 )
-        return self.database["posts"].find_one_and_update({'_id': post_id},
+        self.database["posts"].find_one_and_update({'_id': post_id},
                                                           {'$inc': {"likes": 1}},
                                                           )
 
@@ -100,7 +97,7 @@ class PostRepository(BaseRepository):
         self.database["users"].find_one_and_update({'_id': user_id},
                                                     {'$pull': {"liked_posts": post_id}},
                                                 )
-        return self.database["posts"].find_one_and_update({'_id': post_id},
+        self.database["posts"].find_one_and_update({'_id': post_id},
                                                           {'$inc': {"likes": -1}},
                                                           )
 

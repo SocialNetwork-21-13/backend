@@ -73,7 +73,8 @@ class PostRepository(BaseRepository):
     def get_file_id(self, file:bytes) ->str:
         imgs_post = gridfs.GridFS(self.database, "imgs_post")
         obj = imgs_post.put(file)
-        return str(imgs_post.get(obj)._id)
+        post_id=str(imgs_post.get(obj)._id)
+        return post_id
 
     def get_file(self, post_id : str) ->bytes:
         post = self.database["posts"].find_one({"_id" : post_id})

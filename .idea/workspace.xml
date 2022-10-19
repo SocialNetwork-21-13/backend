@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="Add feed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a2180964-f8b4-4707-bb0a-56c9bd77f551" name="Changes" comment="Update">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/endpoints/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/post.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/endpoints/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/endpoints/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fastapi_db.mongodb" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi_db.mongodb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/token.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/repositories/post.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/post.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repositories/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/repositories/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +194,7 @@
       <workItem from="1666108489973" duration="19000" />
       <workItem from="1666108985087" duration="1342000" />
       <workItem from="1666112993762" duration="12694000" />
-      <workItem from="1666182310570" duration="11465000" />
+      <workItem from="1666182310570" duration="11886000" />
     </task>
     <task id="LOCAL-00001" summary="to .ignore">
       <created>1665004373952</created>
@@ -246,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666193309262</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Update">
+      <created>1666215181479</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666215181479</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,18 +279,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="to .ignore" />
     <MESSAGE value="mongodb" />
-    <MESSAGE value="Update" />
     <MESSAGE value="adding auth to all post methods" />
     <MESSAGE value="XML File Update" />
     <MESSAGE value="Add feed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add feed" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/repositories/post.py</url>
-          <line>70</line>
+          <line>71</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

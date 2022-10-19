@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
+import gridfs
 from dotenv import dotenv_values
 from pymongo import MongoClient
 from endpoints.user import router as user_router

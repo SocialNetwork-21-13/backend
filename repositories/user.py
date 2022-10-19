@@ -170,6 +170,3 @@ class UserRepository(BaseRepository):
     def get_current_user(self,token : str) -> User:
         username = auth_handler.decode_token(token)
         return self.get_by_username(username)
-
-
-

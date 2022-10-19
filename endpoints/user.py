@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Body, status, File, Response, Security, Depends
 from typing import List
 from repositories.user import UserRepository
-from repositories.post import PostRepository
 from models.user import User, UserIn
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
@@ -13,7 +12,6 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 router = APIRouter()
 
 users = UserRepository()
-posts = PostRepository()
 security = HTTPBearer()
 
 @router.get("/", response_description="List all users", response_model=List[User])
@@ -79,6 +77,3 @@ def get_subscribers(credentials: HTTPAuthorizationCredentials = Security(securit
 def get_subscriptions(credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
     return users.get_subscriptions(user["_id"])
-
-
-

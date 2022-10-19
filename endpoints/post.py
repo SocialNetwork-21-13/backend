@@ -45,3 +45,9 @@ def like(post_id : str, credentials: HTTPAuthorizationCredentials = Security(sec
 def dislike(post_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
     return posts.unset_like(post_id, user["_id"])
+
+@router.get("/{user_id}/feed", response_description="Feed",response_model=List[Post])
+def get_feed(credentials: HTTPAuthorizationCredentials = Security(security)):
+    user = users.get_current_user(credentials.credentials)
+    return posts.get_feed(user["_id"])
+

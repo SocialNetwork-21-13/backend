@@ -2,18 +2,19 @@ from datetime import datetime
 import datetime
 from typing import List, Optional
 
-from fastapi import Body, Depends, FastAPI, APIRouter, HTTPException, Security
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi import HTTPException
+from fastapi.security import HTTPBearer
 from core.auth import Auth
 from bson import ObjectId
-from models.user import User, UserIn, AuthModel
-from core.security import hash_password
+from models.user import User, UserIn
+from models.post import Post
 from fastapi import HTTPException, status
 from fastapi.encoders import jsonable_encoder
 import gridfs
 from .base import BaseRepository
-import os
-# from core.config import DEFAULT_IMAGE_ID
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
 
 security = HTTPBearer()
 auth_handler = Auth()
@@ -38,7 +39,7 @@ class UserRepository(BaseRepository):
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow(),
         )
-        user.profile_image = os.getenv("DEFAULT_IMAGE_ID")
+        user.profile_image = config["DEFAULT_PROFILE_IMAGE"]
         user = jsonable_encoder(user)
         new_user = self.database["users"].insert_one(user)
         created_user = self.database["users"].find_one(
@@ -47,7 +48,7 @@ class UserRepository(BaseRepository):
         return created_user
 
     def update(self, user_id : str, u : UserIn) -> User:
-        return self.database["users"].find_one_and_update({'_id': user_id},
+        self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { 
                                 "name" : u.name,
                                 "surname" : u.surname,
@@ -57,11 +58,12 @@ class UserRepository(BaseRepository):
                                 "email" : u.email,
                             } },
                             )
+        created_user = self.database["users"].find_one({"_id" : user_id})
+        return created_user
 
     def upload_image(self, file : bytes):
         imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
-        obj = imgs_profile.put(file)
-        os.environ["DEFAULT_IMAGE_ID"] = str(imgs_profile.get(obj)._id)
+        imgs_profile.put(file)
 
     def get_by_email(self, email: str) -> User:
         if (user := self.database["users"].find_one({"email": email})) is not None:
@@ -74,26 +76,32 @@ class UserRepository(BaseRepository):
         return str(imgs_profile.get(obj)._id)
 
     def update_name_surname(self, user_id : str, new_name : str, new_surname : str) -> User:
-        return self.database["users"].find_one_and_update({'_id': user_id},
+        self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { 
                                 "name" : new_name,
                                 "surname" : new_surname,
                             } },
                             )
+        created_user = self.database["users"].find_one({"_id" : user_id})
+        return created_user
 
     def update_profile_image(self, user_id : str, file_id : str) -> User:
         user = self.database["users"].find_one({"_id" : user_id})
-        if user["profile_image"] != os.getenv("DEFAULT_IMAGE_ID"):
+        if user["profile_image"] != config["DEFAULT_PROFILE_IMAGE"]:
             imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
             imgs_profile.delete(ObjectId(user["profile_image"]))
-        return self.database["users"].find_one_and_update({'_id': user_id},
+        self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { "profile_image" : file_id} },
                             )
+        created_user = self.database["users"].find_one({"_id" : user_id})
+        return created_user
 
     def update_username(self, user_id : str, new_username : str) -> User:
-        return self.database["users"].find_one_and_update({'_id': user_id},
+        self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { "username" : new_username} },
                             )
+        created_user = self.database["users"].find_one({"_id" : user_id})
+        return created_user
 
     def delete(self, user_id : str):
         self.database["users"].find_one_and_delete({"_id" : user_id})
@@ -105,9 +113,11 @@ class UserRepository(BaseRepository):
         return file.read()
 
     def update_bio(self, user_id : str, new_bio : str) -> User:
-        return self.database["users"].find_one_and_update({'_id': user_id},
+        self.database["users"].find_one_and_update({'_id': user_id},
                             { '$set': { "bio" : new_bio} },
                             )
+        created_user = self.database["users"].find_one({"_id" : user_id})
+        return created_user
         
     def subscribe(self, user_id : str, sub_user_id : str):
         self.database["users"].find_one_and_update({'_id': user_id},
@@ -170,3 +180,24 @@ class UserRepository(BaseRepository):
     def get_current_user(self,token : str) -> User:
         username = auth_handler.decode_token(token)
         return self.get_by_username(username)
+
+    # User's post methods
+    def set_like(self, post_id : str, user_id : str) -> Post:
+        self.database["users"].find_one_and_update({'_id': user_id},
+                                                    {'$push': {"liked_posts": post_id}},
+                                                )
+        self.database["posts"].find_one_and_update({'_id': post_id},
+                                                          {'$inc': {"likes": 1}},
+                                                          )
+        created_post = self.database["posts"].find_one({"_id" : post_id})
+        return created_post
+
+    def unset_like(self, post_id : str, user_id : str) -> Post:
+        self.database["users"].find_one_and_update({'_id': user_id},
+                                                    {'$pull': {"liked_posts": post_id}},
+                                                )
+        self.database["posts"].find_one_and_update({'_id': post_id},
+                                                          {'$inc': {"likes": -1}},
+                                                          )
+        created_post = self.database["posts"].find_one({"_id" : post_id})
+        return created_post

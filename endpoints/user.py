@@ -3,9 +3,7 @@ from typing import List
 from repositories.user import UserRepository
 from models.user import User, UserIn
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
-
-
+from models.post import Post
 # from pymongo import ReturnDocument
 # from fastapi.responses import JSONResponse, FileResponse
 
@@ -63,17 +61,27 @@ def subscribe_user(sub_id : str, credentials: HTTPAuthorizationCredentials = Sec
     user = users.get_current_user(credentials.credentials)
     return users.subscribe(user["_id"], sub_id)
 
-@router.put("/{user_id}/unsubscribe", response_description="Unsubscribe user")
+@router.put("/unsubscribe", response_description="Unsubscribe user")
 def unsubscribe_user(sub_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
     return users.unsubsribe(user["_id"], sub_id)
 
-@router.get("/{user_id}/get_subscribers", response_description="List subscribers", response_model=List[User])
+@router.get("/get_subscribers", response_description="List subscribers", response_model=List[User])
 def get_subscribers(credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
     return users.get_subscribers(user["_id"])
 
-@router.get("/{user_id}/get_subscriptions", response_description="List subscriptions", response_model=List[User])
+@router.get("/get_subscriptions", response_description="List subscriptions", response_model=List[User])
 def get_subscriptions(credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
     return users.get_subscriptions(user["_id"])
+
+@router.put("/like", response_description="Like post", response_model=Post)
+def like(post_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
+    user = users.get_current_user(credentials.credentials)
+    return users.set_like(post_id, user["_id"])
+
+@router.put("/dislike", response_description="Dislike post", response_model=Post)
+def dislike(post_id : str, credentials: HTTPAuthorizationCredentials = Security(security)):
+    user = users.get_current_user(credentials.credentials)
+    return users.unset_like(post_id, user["_id"])

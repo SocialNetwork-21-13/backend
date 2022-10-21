@@ -8,7 +8,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException, status
 import gridfs
 from bson import ObjectId
-from repositories.user import UserRepository
+from .user import UserRepository
 
 users = UserRepository()
 

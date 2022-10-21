@@ -6,7 +6,7 @@ import pytest
 
 client = TestClient(user_app)
 
-jwt_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjYzNjczNDksImlhdCI6MTY2NjM2NTU0OSwic2NvcGUiOiJhY2Nlc3NfdG9rZW4iLCJzdWIiOiJ0ZXN0In0.hbUH18lVA31SdEocDk_bMYWcR6sDE8mu9PdzT_f38cc"
+jwt_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjYzNzAxNjAsImlhdCI6MTY2NjM2ODM2MCwic2NvcGUiOiJhY2Nlc3NfdG9rZW4iLCJzdWIiOiJHaW5raW4ifQ.K0rmliNaLu56JuKlpdta6J1R9BxFDM4zFIg65fXsJXw"
 
 @pytest.mark.skip(reason="Already signed up")
 def test_sign_up():

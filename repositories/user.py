@@ -201,3 +201,7 @@ class UserRepository(BaseRepository):
                                                           )
         created_post = self.database["posts"].find_one({"_id" : post_id})
         return created_post
+
+    def get_profile_image_id(self,user_id: str):
+        profile_image_id=self.database["users"].find_one({"_id" : user_id})
+        return profile_image_id

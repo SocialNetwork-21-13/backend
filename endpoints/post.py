@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import List
 from repositories.post import PostRepository
 from models.post import Post, PostIn
+from models.comment import Comment, CommentIn
 from repositories.user import UserRepository
 
 router = APIRouter()
@@ -43,4 +44,13 @@ def get_feed(credentials: HTTPAuthorizationCredentials = Security(security)):
 @router.get("/profile_feed", response_description="profile_feed",response_model=List[Post])
 def get_profile_feed(credentials: HTTPAuthorizationCredentials = Security(security)):
     user = users.get_current_user(credentials.credentials)
-    return posts.get_all_by_id(user["_id"])
+    return posts.get_profile_feed(user["_id"])
+
+@router.post("/comment",response_description="/comment",response_model=Comment)
+def create_comment(post_id: str,credentials: HTTPAuthorizationCredentials = Security(security),comment:CommentIn=Depends()):
+    user = users.get_current_user(credentials.credentials)
+    return posts.post_comment(post_id, user["_id"],comment)
+
+@router.get("/show_comments",response_description="/show_comments",response_model=List[Comment])
+def show_comments(post_id: str):
+    return posts.show_comments(post_id)

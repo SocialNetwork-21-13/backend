@@ -12,8 +12,8 @@ class Comment(BaseComment):
     updated_at: datetime.datetime
     user_id: str
     profile_image: str
-    post_id:str
-    username:str
+    post_id: str
+    username: str
 
 
 class CommentIn(BaseComment):

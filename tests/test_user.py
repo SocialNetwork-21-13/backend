@@ -1,4 +1,3 @@
-from pprint import pprint
 import sys
 sys.path.insert(0, 'src/')
 from fastapi.testclient import TestClient

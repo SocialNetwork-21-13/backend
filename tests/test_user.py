@@ -1,12 +1,17 @@
+from pprint import pprint
 import sys
 sys.path.insert(0, 'src/')
 from fastapi.testclient import TestClient
 from src.main import app as user_app
 import pytest
+from src.repositories.user import UserRepository
 
 client = TestClient(user_app)
 
-jwt_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjYzNzAxNjAsImlhdCI6MTY2NjM2ODM2MCwic2NvcGUiOiJhY2Nlc3NfdG9rZW4iLCJzdWIiOiJHaW5raW4ifQ.K0rmliNaLu56JuKlpdta6J1R9BxFDM4zFIg65fXsJXw"
+users = UserRepository()
+
+jwt_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjYzNzEyMzQsImlhdCI6MTY2NjM2OTQzNCwic2NvcGUiOiJhY2Nlc3NfdG9rZW4iLCJzdWIiOiJ0ZXN0In0.YPiVbQEu25asw7RrGDz-9nopMyqN81oXtpEluJkQ7jQ"
+user_id = ""
 
 @pytest.mark.skip(reason="Already signed up")
 def test_sign_up():
@@ -27,31 +32,12 @@ def test_get_user():
                         headers={"accept": "application/json",
                                 "Authorization": jwt_token},
                         )
+    u_id = response.json()["_id"]
+    global user_id
+    user_id = u_id
+    user = users.get_by_id(user_id)
     assert response.status_code == 200
-    '''
-    user = {
-        "_id": "80647541-c473-426b-aa7b-6f2d4a69efbd",
-        "profile_image": "63503dac5b3eee2fd67f100d",
-        "name": "testic",
-        "surname": "testic",
-        "bio": "testi",
-        "email": "testic@example.com",
-        "hashed_password": "$2b$12$No3QJXzW7qac8.r6wYb8G.zpKO8.I8VNWFsSemQ9244Dx1ZiV.f8i",
-        "username": "test",
-        "gender": "woman",
-        "age": "2022-10-19",
-        "liked_posts": [
-            "080f63fd-542e-4085-8a49-92925f007b2a",
-            "a5865168-eb03-4a25-aae4-aa0bd146523d"
-        ],
-        "subscriptions": [],
-        "subscribers": [
-            "8631fd7a-940a-46b4-9d72-cb42585d790d"
-        ],
-        "created_at": "2022-10-19T18:22:04.754528",
-        "updated_at": "2022-10-19T18:22:04.754532"
-    }
-    assert response.json() == user '''
+    assert response.json() == user
 
 def test_get_users():
     response = client.get("/users/",
@@ -77,13 +63,82 @@ def test_update_user():
                                 },
                         json=update_data
                         )
+    global user_id
+    user = users.get_by_id(user_id)
+    assert response.json() == user
     assert response.status_code == 200
 
+@pytest.mark.skip(reason="Not working")
 def test_update_profile_image():
     response = client.put("/users/profile_image",
                         headers={"accept": "application/json",
                                 "Authorization": jwt_token,
                                 "Content-Type": "multipart/form-data",
-
                                 },
+                        files="file=@1_change.png;type=image/png"
                         )
+    assert response.status_code == 200
+
+def test_update_name_surname():
+    response = client.put("/users/name_surname?name=third&surname=fourh",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    user = users.get_by_id(user_id)
+    assert response.json() == user
+    assert response.status_code == 200
+
+def test_update_username():
+    response = client.put("/users/username?username=test",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    user = users.get_by_id(user_id)
+    assert response.json() == user
+    assert response.status_code == 200
+
+def test_update_bio():
+    response = client.put("/users/bio?bio=testic",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    user = users.get_by_id(user_id)
+    assert response.json() == user
+    assert response.status_code == 200
+
+def test_subscribe():
+    response = client.put("/users/subscribe?sub_id=80647541-c473-426b-aa7b-6f2d4a69efbd",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    assert response.status_code == 200
+
+def test_unsibscribe():
+    response = client.put("/users/unsubscribe?sub_id=80647541-c473-426b-aa7b-6f2d4a69efbd",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    assert response.status_code == 200
+
+def test_get_subscribers():
+    response = client.get("/users/get_subscribers",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    subs = users.get_subscribers(user_id)
+    assert response.json() == subs
+    assert response.status_code == 200
+
+def test_get_subscriptions():
+    response = client.get("/users/get_subscriptions",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    subs = users.get_subscriptions(user_id)
+    assert response.json() == subs
+    assert response.status_code == 200

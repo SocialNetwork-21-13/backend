@@ -4,10 +4,12 @@ from fastapi.testclient import TestClient
 from src.main import app as user_app
 import pytest
 from src.repositories.user import UserRepository
+from src.repositories.post import PostRepository
 
 client = TestClient(user_app)
 
 users = UserRepository()
+posts = PostRepository()
 
 jwt_token = "Bearer "
 user_id = ""
@@ -100,6 +102,17 @@ def test_update_username():
     assert response.json() == user
     assert response.status_code == 200
 
+@pytest.mark.skip(reason="Not working")
+def test_get_image():
+    response = client.get("/users/get_image",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    global user_id
+    img_data = str(users.get_file(user_id))
+    assert response.json() == img_data
+    assert response.status_code == 200
+
 def test_update_bio():
     response = client.put("/users/bio?bio=testic",
                         headers={"accept": "application/json",
@@ -142,4 +155,24 @@ def test_get_subscriptions():
     global user_id
     subs = users.get_subscriptions(user_id)
     assert response.json() == subs
+    assert response.status_code == 200
+
+def test_like():
+    post_id = "02ababd8-0d19-401a-be8b-231d78940270"
+    response = client.put("/users/like?post_id=02ababd8-0d19-401a-be8b-231d78940270",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    post = posts.get_by_id(post_id)
+    assert response.json() == post
+    assert response.status_code == 200
+
+def test_dislike():
+    post_id = "02ababd8-0d19-401a-be8b-231d78940270"
+    response = client.put("/users/dislike?post_id=02ababd8-0d19-401a-be8b-231d78940270",
+                        headers={"accept": "application/json",
+                                "Authorization": jwt_token},
+                        )
+    post = posts.get_by_id(post_id)
+    assert response.json() == post
     assert response.status_code == 200

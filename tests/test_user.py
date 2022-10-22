@@ -9,7 +9,7 @@ client = TestClient(user_app)
 
 users = UserRepository()
 
-jwt_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjYzNzEyMzQsImlhdCI6MTY2NjM2OTQzNCwic2NvcGUiOiJhY2Nlc3NfdG9rZW4iLCJzdWIiOiJ0ZXN0In0.YPiVbQEu25asw7RrGDz-9nopMyqN81oXtpEluJkQ7jQ"
+jwt_token = "Bearer "
 user_id = ""
 
 @pytest.mark.skip(reason="Already signed up")
@@ -23,6 +23,8 @@ def test_login():
     response = client.post("/auth/login?username=test&password=testtest",
                          headers={"accept": "application/json"},
                         )
+    global jwt_token
+    jwt_token += response.json()["access_token"]
     assert response.status_code == 200
 
 # @pytest.mark.skip(reason="Already get")

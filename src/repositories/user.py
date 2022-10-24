@@ -156,7 +156,7 @@ class UserRepository(BaseRepository):
 
     def get_by_username(self, username : str) -> Optional[User]:
         return self.database["users"].find_one({"username" : username})
-    
+
     # User' login methods
 
     def signup(self, username : str, password : str) -> User:
@@ -182,6 +182,7 @@ class UserRepository(BaseRepository):
         return self.get_by_username(username)
 
     # User's post methods
+
     def set_like(self, post_id : str, user_id : str) -> Post:
         self.database["users"].find_one_and_update({'_id': user_id},
                                                     {'$push': {"liked_posts": post_id}},

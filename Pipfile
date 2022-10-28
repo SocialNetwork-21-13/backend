@@ -8,6 +8,14 @@ python-dotenv = "*"
 fastapi = "*"
 uvicorn = "*"
 pymongo = "*"
+flake8
+flake8-quotes
+flake8-import-order
+flake8-bugbear
+flake8-builtins
+pep8-naming
+flake8-commas
+flake8-variables-names
 
 [dev-packages]
 

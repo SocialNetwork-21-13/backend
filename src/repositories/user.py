@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from bson import ObjectId
 from core.auth import Auth
+from database.db import Database
 from dotenv import dotenv_values
 from fastapi import HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -10,7 +11,6 @@ from fastapi.security import HTTPBearer
 import gridfs
 from models.post import Post
 from models.user import User, UserIn
-from repositories.base import BaseRepository
 
 config = dotenv_values(".env")
 
@@ -18,7 +18,7 @@ security = HTTPBearer()
 auth_handler = Auth()
 
 
-class UserRepository(BaseRepository):
+class UserRepository(Database):
 
     # User's profile methods
 

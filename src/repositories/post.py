@@ -3,16 +3,24 @@ import datetime as dt
 from datetime import datetime
 from models.post import Post, PostIn
 from models.comment import Comment, CommentIn
-from .base import BaseRepository
 from fastapi.encoders import jsonable_encoder
 from fastapi import HTTPException, status
 import gridfs
 from bson import ObjectId
 from .user import UserRepository
+from dotenv import dotenv_values
+from pymongo import MongoClient
 
 users = UserRepository()
 
-class PostRepository(BaseRepository):
+config = dotenv_values(".env")
+
+
+class PostRepository():
+
+    def __init__(self):
+        client = MongoClient(config["ATLAS_URI"])
+        self.database = client[config["DB_NAME"]]
 
     def create(self, user_id:str, file_id:str, p: PostIn) ->Post:
         post = Post(

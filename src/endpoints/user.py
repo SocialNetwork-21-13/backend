@@ -15,12 +15,14 @@ security = HTTPBearer()
 
 
 @router.get("/", response_description="List all users", response_model=List[User])
-def list_users(limit: int = 100, skip: int = 0, users: UserRepository = Depends(), _credentials: HTTPAuthorizationCredentials = Security(security)):
+def list_users(limit: int = 100, skip: int = 0, users: UserRepository = Depends(),
+               _credentials: HTTPAuthorizationCredentials = Security(security)):
     return users.get_all(limit=limit, skip=skip)
 
 
 @router.put("/update", response_description="Update user profile", response_model=User)
-def update(users: UserRepository = Depends(), credentials: HTTPAuthorizationCredentials = Security(security), _user: UserIn = Body(...)):
+def update(users: UserRepository = Depends(), credentials: HTTPAuthorizationCredentials = Security(security),
+           _user: UserIn = Body(...)):
     user = users.get_current_user(credentials.credentials)
     return users.update(user["_id"], _user)
 

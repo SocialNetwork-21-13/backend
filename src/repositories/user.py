@@ -3,8 +3,8 @@ from typing import List, Optional
 
 from bson import ObjectId
 from core.auth import Auth
+from core.config import Settings
 from database.db import Database
-from dotenv import dotenv_values
 from fastapi import HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import HTTPBearer
@@ -12,10 +12,7 @@ import gridfs
 from models.post import Post
 from models.user import User, UserIn
 
-config = dotenv_values(".env")
-
 security = HTTPBearer()
-auth_handler = Auth()
 
 
 class UserRepository(Database):
@@ -69,13 +66,14 @@ class UserRepository(Database):
         Returns:
             User: created user
         """
+        settings = Settings()
         user = User(
             username=_user["username"],
             hashed_password=_user["hashed_password"],
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow(),
         )
-        user.profile_image = config["DEFAULT_PROFILE_IMAGE"]
+        user.profile_image = settings.DEFAULT_PROFILE_IMAGE
         user = jsonable_encoder(user)
         new_user = self.database["users"].insert_one(user)
         created_user = self.database["users"].find_one(
@@ -174,10 +172,14 @@ class UserRepository(Database):
         Returns:
             User: updated user
         """
+
+        settings = Settings()
         user = self.database["users"].find_one({"_id": user_id})
-        if user["profile_image"] != config["DEFAULT_PROFILE_IMAGE"]:
+
+        if user["profile_image"] != settings.DEFAULT_PROFILE_IMAGE:
             imgs_profile = gridfs.GridFS(self.database, "imgs_profile")
             imgs_profile.delete(ObjectId(user["profile_image"]))
+
         self.database["users"].find_one_and_update({"_id": user_id},
                                                    {"$set": {"profile_image": file_id}},
                                                    )
@@ -343,6 +345,8 @@ class UserRepository(Database):
         Returns:
             User: created user
         """
+        settings = Settings()
+        auth_handler = Auth(settings)
         if self.check_username(username):
             return HTTPException(status_code=401, detail="Account already exists")
         try:
@@ -365,6 +369,8 @@ class UserRepository(Database):
         Returns:
             User: if user signed up
         """
+        settings = Settings()
+        auth_handler = Auth(settings)
         user = self.get_by_username(username)
         if self.check_username(username) is False:
             return HTTPException(status_code=401, detail="Invalid username")
@@ -381,7 +387,9 @@ class UserRepository(Database):
         Returns:
             User: if user logined
         """
-        username = auth_handler.decode_token(token)
+        settings = Settings()
+        auth_handler = Auth(settings)
+        username = auth_handler.decode_token(token, settings)
         return self.get_by_username(username)
 
     # User's post methods

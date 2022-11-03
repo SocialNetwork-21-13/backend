@@ -10,6 +10,11 @@ from pydantic import BaseModel, constr, EmailStr, Field
 
 
 class User(BaseModel):
+    """The user class represents how the user is stored in the database
+
+    Args:
+        BaseModel ([type]): Pydantic basemodel
+    """
     _id: str = Field(default_factory=uuid.uuid4, alias="_id")
     profile_image: str = ""
     name: str = ""
@@ -28,6 +33,11 @@ class User(BaseModel):
 
 
 class UserIn(BaseModel):
+    """The userin class represents what information the user can input after regestration
+
+    Args:
+        BaseModel (_type_): pydantic basemodel
+    """
     name: str
     surname: str
     bio: str
@@ -37,5 +47,10 @@ class UserIn(BaseModel):
 
 
 class AuthModel(BaseModel):
+    """The userin class represents what information the user input when regestration
+
+    Args:
+        BaseModel (_type_): pydantic basemodel
+    """
     username: str
     password: constr(min_length=8)

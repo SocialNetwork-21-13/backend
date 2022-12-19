@@ -1,0 +1,6 @@
+[flake8]
+exclude = .git,__pycache__,build,dist,env,venv
+import-order-style = google
+max-line-length = 120
+max-complexity = 8
+inline-quotes = "
